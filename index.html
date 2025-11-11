@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>階段チャレンジ（カメラ内蔵版）</title>
+  <title>階段チャレンジ（カメラ起動版）</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
@@ -11,7 +11,15 @@
   <h1>階段チャレンジ</h1>
   <p id="status">7階のQRコードをカメラで読み込んでください</p>
 
-  <div id="reader" style="width: 300px; margin: auto;"></div>
+ <p id="status">「カメラを起動」ボタンを押して始めてください</p>
+
+  <!-- カメラ起動ボタン -->
+  <button id="startButton" onclick="startCamera()">カメラを起動</button>
+
+  <!-- カメラ映像を表示する領域 -->
+  <div id="reader" style="width:300px; margin:auto; display:none;"></div>
+
+  <!-- タイマー表示 -->
   <div id="timer">00.00 秒</div>
 
   <script src="script.js"></script>

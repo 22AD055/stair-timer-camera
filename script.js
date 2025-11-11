@@ -1,21 +1,34 @@
-// 状態管理
-let stage = "wait_start"; // wait_start → running → finished
+let stage = "wait_start"; // 状態管理
 let startTime;
+let html5QrCode;
 
-// QRコードリーダーを初期化
-const html5QrCode = new Html5Qrcode("reader");
+// --- カメラ起動 ---
+function startCamera() {
+  document.getElementById("startButton").style.display = "none"; // ボタン非表示
+  document.getElementById("reader").style.display = "block"; // カメラ領域を表示
+  document.getElementById("status").textContent = "7階のQRを読み取ってください";
 
+  html5QrCode = new Html5Qrcode("reader");
+  html5QrCode.start(
+    { facingMode: "environment" }, // 背面カメラを使用
+    { fps: 10, qrbox: 250 },
+    onScanSuccess
+  ).catch(err => {
+    alert("カメラを起動できませんでした。設定を確認してください。");
+    console.error(err);
+  });
+}
+
+// --- QR読み取り時の処理 ---
 function onScanSuccess(decodedText) {
-  // スキャン成功時に呼ばれる関数
   console.log("QR検出:", decodedText);
 
-  // スタートQRを読み取ったらタイマー開始
+  // START_QRを読み取った場合
   if (stage === "wait_start" && decodedText === "START_QR") {
     startTime = Date.now();
     stage = "running";
-    document.getElementById("status").textContent = "計測中！2階のQRを読み取ってください";
+    document.getElementById("status").textContent = "計測中... 2階のQRを読み取ってください";
 
-    // タイマー表示
     const timerDisplay = document.getElementById("timer");
     const timerInterval = setInterval(() => {
       if (stage !== "running") {
@@ -27,7 +40,7 @@ function onScanSuccess(decodedText) {
     }, 100);
   }
 
-  // ストップQRを読み取ったらタイマー停止＆記録送信
+  // STOP_QRを読み取った場合
   else if (stage === "running" && decodedText === "STOP_QR") {
     stage = "finished";
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -36,11 +49,17 @@ function onScanSuccess(decodedText) {
 
     const name = prompt("名前を入力してください（ランキング用）:");
     if (name) {
-      function sendToGoogleForm(name, time) {
-  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/previewResponse"; // ← フォームURL
+      sendToGoogleForm(name, elapsed);
+    }
+  }
+}
+
+// --- Googleフォームに送信 ---
+function sendToGoogleForm(name, time) {
+  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/previewResponse";
   const formData = new FormData();
-  formData.append("entry.1355586289", name); // ← 名前のentry番号
-  formData.append("entry.1851549436", time); // ← タイムのentry番号
+  formData.append("entry.1355586289", name); // ← 名前用 entry 番号
+  formData.append("entry.1851549436", time); // ← タイム用 entry 番号
 
   fetch(formURL, {
     method: "POST",
@@ -48,15 +67,5 @@ function onScanSuccess(decodedText) {
     body: formData
   })
   .then(() => alert("記録を送信しました！"))
-  .catch(() => alert("送信に失敗しました"));
+  .catch(() => alert("送信に失敗しました。"));
 }
-
-  }
-}
-
-// カメラ起動
-html5QrCode.start(
-  { facingMode: "environment" }, // 背面カメラ
-  { fps: 10, qrbox: 250 },
-  onScanSuccess
-);

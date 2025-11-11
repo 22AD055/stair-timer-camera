@@ -9,6 +9,20 @@ h1 {
   color: #0078ff;
 }
 
+button {
+  background-color: #0078ff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fcc;
+}
+
 #timer {
   font-size: 2.5em;
   margin-top: 20px;
@@ -17,5 +31,5 @@ h1 {
 
 #status {
   font-size: 1.1em;
-  margin-bottom: 20px;
+  margin: 20px;
 }

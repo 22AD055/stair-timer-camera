@@ -65,7 +65,7 @@ function onScanSuccess(decodedText) {
 
 // --- Googleフォームに送信 ---
 function sendToGoogleForm(name, time) {
-  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/previewResponse";
+  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/formResponse";
   const formData = new FormData();
   formData.append("entry.1355586289", name); // ← 名前用 entry 番号
   formData.append("entry.1851549436", time); // ← タイム用 entry 番号

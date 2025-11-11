@@ -4,7 +4,7 @@ let html5QrCode;
 
 // --- カメラ起動 ---
 function startCamera() {
-  document.getElementById("startButton").style.display = "none"; // ボタン非表示
+  document.getElementById("startButton").addEventListener("click", startCamera);
   document.getElementById("reader").style.display = "block"; // カメラ領域を表示
   document.getElementById("status").textContent = "7階のQRを読み取ってください";
 

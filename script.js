@@ -36,7 +36,7 @@ function onScanSuccess(decodedText) {
 
     const name = prompt("名前を入力してください（ランキング用）:");
     if (name) {
-      fetch("https://script.google.com/macros/s/AKfycbxc7T1e2-oeXrJJODqbKedD6dsk2B4zU9xKJWuNVOEMyH-rBMLMb55iwwiaPOOV3q0R-Q/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbw9FVGpjw3tKr-8gtuVFQexVVFnEBw5b_D6cvAIcEu3nAnJ_AtkfihvM6LkuHwUU7QJ1Q/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name, time: elapsed })

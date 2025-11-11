@@ -2,11 +2,20 @@ let stage = "wait_start"; // 状態管理
 let startTime;
 let html5QrCode;
 
-// --- カメラ起動 ---
-function startCamera() {
+// --- ページ読み込み時にイベントを設定 ---
+window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("startButton").addEventListener("click", startCamera);
-  document.getElementById("reader").style.display = "block"; // カメラ領域を表示
+});
+
+// --- カメラ起動処理 ---
+function startCamera() {
+  // Safari対策：ダイアログを1回挟む
+  alert("OKを押すとカメラを起動します。");
+
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("reader").style.display = "block";
   document.getElementById("status").textContent = "7階のQRを読み取ってください";
+
 
   html5QrCode = new Html5Qrcode("reader");
   html5QrCode.start(

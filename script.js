@@ -36,15 +36,21 @@ function onScanSuccess(decodedText) {
 
     const name = prompt("名前を入力してください（ランキング用）:");
     if (name) {
-      fetch("https://script.google.com/macros/s/AKfycbyh0pzoZdrvG6km45MXm4wMl5a8PSwfYlZADaHhGBQFf9BdWgpdyYkTpHpdUmQSQp9Hlg/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name, time: elapsed })
-      })
-      .then(r => r.text())
-      .then(() => alert("記録を送信しました！"))
-      .catch(() => alert("送信に失敗しました。"));
-    }
+      function sendToGoogleForm(name, time) {
+  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/previewResponse"; // ← フォームURL
+  const formData = new FormData();
+  formData.append("entry.1355586289", name); // ← 名前のentry番号
+  formData.append("entry.1851549436", time); // ← タイムのentry番号
+
+  fetch(formURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  })
+  .then(() => alert("記録を送信しました！"))
+  .catch(() => alert("送信に失敗しました"));
+}
+
   }
 }
 

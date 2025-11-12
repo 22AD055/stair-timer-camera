@@ -69,6 +69,7 @@ function onScanSuccess(decodedText) {
     sendToGoogleForm(name, elapsed);
   }
 }
+}
 
 // --- Googleフォームに送信 ---
 function sendToGoogleForm(name, time) {

@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動処理 ---
 function startCamera() {
   // Safari対策：ダイアログを1回挟む
-  alert("OKを押すとカメラを起動します。");
+  alert("カメラを起動します");
 
   document.getElementById("startButton").style.display = "none";
   document.getElementById("reader").style.display = "block";

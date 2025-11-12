@@ -30,6 +30,8 @@ button:hover {
 }
 
 #status {
-  font-size: 1.1em;
-  margin: 20px;
+  max-width: 95%; /* ← 表示領域の幅を広げる（デフォルトは狭め） */
+  margin: 10px auto; /* ← 中央寄せ */
+  text-align: center;
+  word-break: keep-all; /* ← できるだけ単語途中で改行しない */
 }

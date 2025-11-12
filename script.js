@@ -58,17 +58,34 @@ function onScanSuccess(decodedText) {
   statusEl.innerHTML = `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
   
   // アニメーションが終わったらクラスを削除（次の結果時に再適用できるように）
-  statusEl.querySelector(".result-pop").addEventListener("animationend", () => {
-    statusEl.querySelector(".result-pop").classList.remove("result-pop");
+  const resultEl = statusEl.querySelector(".result-pop");
+  resultEl.addEventListener("animationend", () => {
+    resultEl.classList.remove("result-pop");
   });
 
   document.getElementById("timer").textContent = `${elapsed} 秒`;
 
-  const name = prompt("名前を入力してください:");
+  const name = prompt("名前を入力してください（ランキング用）");
   if (name) {
     sendToGoogleForm(name, elapsed);
   }
-}
+
+　// カメラを停止（安全に）
+  if (html5QrCode) {
+    html5QrCode.stop()
+      .then(() => {
+        html5QrCode.clear();
+      })
+      .catch(err => console.error("カメラ停止エラー:", err));
+  }
+
+  // カメラ領域とタイマーを非表示
+  document.getElementById("reader").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  // ステータスの下に一言メッセージを追加（任意）
+  statusEl.innerHTML += `<div style="margin-top:20px; font-size:1.2em;">ご協力ありがとうございました！</div>`;
+　}
 }
 
 // --- Googleフォームに送信 ---

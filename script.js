@@ -14,7 +14,7 @@ function startCamera() {
 
   document.getElementById("startButton").style.display = "none";
   document.getElementById("reader").style.display = "block";
-  document.getElementById("status").textContent = "7階のQRコードを<br>読み込んでください";
+  document.getElementById("status").textContent = "7階のQRコードを読み込んでください";
 
 
   html5QrCode = new Html5Qrcode("reader");

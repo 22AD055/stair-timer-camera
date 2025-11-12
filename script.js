@@ -51,15 +51,22 @@ function onScanSuccess(decodedText) {
 
   // STOP_QRを読み取った場合
   else if (stage === "running" && decodedText === "STOP_QR") {
-    stage = "finished";
-const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
-document.getElementById("status").innerHTML = `<span style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
-    document.getElementById("timer").textContent = `${elapsed} 秒あ`;
+  stage = "finished";
+  const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
 
-    const name = prompt("名前を入力してください（ランキング用）");
-    if (name) {
-      sendToGoogleForm(name, elapsed);
-    }
+  const statusEl = document.getElementById("status");
+  statusEl.innerHTML = `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
+  
+  // アニメーションが終わったらクラスを削除（次の結果時に再適用できるように）
+  statusEl.querySelector(".result-pop").addEventListener("animationend", () => {
+    statusEl.querySelector(".result-pop").classList.remove("result-pop");
+  });
+
+  document.getElementById("timer").textContent = `${elapsed} 秒`;
+
+  const name = prompt("名前を入力してください:");
+  if (name) {
+    sendToGoogleForm(name, elapsed);
   }
 }
 

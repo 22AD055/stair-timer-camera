@@ -35,3 +35,25 @@ button:hover {
   text-align: center;
   word-break: keep-all; /* ← できるだけ単語途中で改行しない */
 }
+
+
+/* 結果の文字アニメーション */
+.result-pop {
+  animation: pop 0.6s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

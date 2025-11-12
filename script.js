@@ -36,7 +36,7 @@ function onScanSuccess(decodedText) {
   if (stage === "wait_start" && decodedText === "START_QR") {
     startTime = Date.now();
     stage = "running";
-    document.getElementById("status").textContent = "計測中... 2階のQRを読み取ってください";
+    document.getElementById("status").innerHTML = "計測中...<br>2階のQRを読み取ってください";
 
     const timerDisplay = document.getElementById("timer");
     const timerInterval = setInterval(() => {

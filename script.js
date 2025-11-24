@@ -54,10 +54,10 @@ function onScanSuccess(decodedText) {
   stage = "finished";
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
 
+  // 結果を表示（アニメーション付き）
   const statusEl = document.getElementById("status");
   statusEl.innerHTML = `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
-  
-  // アニメーションが終わったらクラスを削除（次の結果時に再適用できるように）
+
   const resultEl = statusEl.querySelector(".result-pop");
   resultEl.addEventListener("animationend", () => {
     resultEl.classList.remove("result-pop");
@@ -65,41 +65,52 @@ function onScanSuccess(decodedText) {
 
   document.getElementById("timer").textContent = `${elapsed} 秒`;
 
-  const name = prompt("名前を入力してください（ランキング用）");
-  if (name) {
-    sendToGoogleForm(name, elapsed);
-  }
-
-　// カメラを停止（安全に）
+  // --- カメラ停止 ---
   if (html5QrCode) {
-    html5QrCode.stop()
-      .then(() => {
-        html5QrCode.clear();
-      })
-      .catch(err => console.error("カメラ停止エラー:", err));
+    html5QrCode.stop().then(() => {
+      html5QrCode.clear();
+    });
   }
-
-  // カメラ領域とタイマーを非表示
   document.getElementById("reader").style.display = "none";
   document.getElementById("timer").style.display = "none";
 
-  // ステータスの下に一言メッセージを追加（任意）
-  statusEl.innerHTML += `<div style="margin-top:20px; font-size:1.2em;">ご協力ありがとうございました！</div>`;
-　}
+  // --- 入力フォームを表示 ---
+  document.getElementById("formArea").style.display = "block";
+
+  // --- 送信ボタンの処理 ---
+  document.getElementById("submitRecord").onclick = () => {
+    const name = document.getElementById("inputName").value;
+    const times = document.getElementById("inputTimes").value;
+    const habit = document.getElementById("inputHabit").value;
+
+    if (!name) {
+      alert("名前を入力してください！");
+      return;
+    }
+
+    // フォームへ送信
+    sendToGoogleForm(name, elapsed, times, habit);
+
+    statusEl.innerHTML = `<span style="font-size:1.6em;">送信しました！ご協力ありがとうございました！</span>`;
+    document.getElementById("formArea").style.display = "none";
+  };
 }
 
+
 // --- Googleフォームに送信 ---
-function sendToGoogleForm(name, time) {
-  const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/formResponse";
+function sendToGoogleForm(name, time, times, habit) {
+  const formURL = "https://docs.google.com/forms/d/e/【あなたのformResponseURL】/formResponse";
   const formData = new FormData();
-  formData.append("entry.1355586289", name); // ← 名前用 entry 番号
-  formData.append("entry.1851549436", time); // ← タイム用 entry 番号
+
+  // Googleフォームの entry番号 をここに対応させる
+  formData.append("entry.1355586289", name);
+  formData.append("entry.1851549436", time);
+  formData.append("entry.1542941412", times);
+  formData.append("entry.889042589", habit);
 
   fetch(formURL, {
     method: "POST",
     mode: "no-cors",
     body: formData
-  })
-  .then(() => alert("記録を送信しました！"))
-  .catch(() => alert("送信に失敗しました。"));
+  });
 }

@@ -1,26 +1,234 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>階段チャレンジ</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/html5-qrcode"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>階段タイムチャレンジ</title>
+
+    <!-- QRコード読み取りライブラリ -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #reader {
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+            display: none;
+        }
+
+        #status {
+            font-size: 1.4em;
+            margin-top: 20px;
+            line-height: 1.4em;
+        }
+
+        #timer {
+            font-size: 2em;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* 結果アニメーション */
+        .result-pop {
+            animation: pop 1.2s ease-out;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* 入力フォーム部分 */
+        #formArea {
+            display: none;
+            margin-top: 30px;
+        }
+
+        #formArea input, #formArea select {
+            font-size: 1.2em;
+            width: 75%;
+            padding: 8px;
+            margin-top: 8px;
+        }
+
+        #formArea button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+
+        #startButton {
+            padding: 10px 20px;
+            font-size: 1.3em;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>階段チャレンジ！</h1>
-  <p id="status">下部のカメラを起動して<br>7階のQRコードを読み込んでください</p>
 
+    <h1>階段チャレンジ</h1>
 
-  <!-- カメラ起動ボタン -->
-  <button id="startButton">カメラを起動</button>
+    <p id="status">下のボタンを押してカメラを起動してください</p>
 
-  <!-- カメラ映像を表示する領域 -->
-  <div id="reader" style="width:300px; margin:auto; display:none;"></div>
+    <button id="startButton">カメラを起動</button>
 
-  <!-- タイマー表示 -->
-  <div id="timer">00.00 秒</div>
+    <div id="reader"></div>
+    <div id="timer"></div>
 
-  <script src="script.js"></script>
+    <!-- 記録フォーム -->
+    <div id="formArea">
+        <h2>記録登録</h2>
+
+        <label>名前：</label><br>
+        <input id="inputName" type="text"><br><br>
+
+        <label>階段チャレンジは何回目ですか？</label><br>
+        <select id="inputTimes">
+            <option value="1回目">1回目</option>
+            <option value="2回目">2回目</option>
+            <option value="3~5回目">3~5回目</option>
+            <option value="それ以上">それ以上</option>
+        </select><br><br>
+
+        <label>普段、階段を利用しますか？</label><br>
+        <select id="inputHabit">
+            <option value="全く利用しない">全く利用しない</option>
+            <option value="あまり利用しない">あまり利用しない</option>
+            <option value="たまに利用する">たまに利用する</option>
+            <option value="よく利用する">よく利用する</option>
+        </select><br><br>
+
+        <button id="submitRecord">記録を送信</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let stage = "wait_start";
+        let startTime;
+        let html5QrCode;
+
+        // ページ読み込み時
+        window.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("startButton").addEventListener("click", startCamera);
+        });
+
+        // --- カメラ起動 ---
+        function startCamera() {
+            alert("OKを押すとカメラを起動します。");
+
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("reader").style.display = "block";
+
+            document.getElementById("status").innerHTML = "カメラで<br>7階のQRコードを読み込んでください";
+
+            html5QrCode = new Html5Qrcode("reader");
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                onScanSuccess
+            );
+        }
+
+        // --- QRコードを検出したとき ---
+        function onScanSuccess(decodedText) {
+
+            console.log("QR検出:", decodedText);
+
+            if (stage === "wait_start" && decodedText === "START_QR") {
+                stage = "running";
+                startTime = Date.now();
+                document.getElementById("status").innerHTML =
+                    "計測中...<br>2階のQRを読み取ってください";
+
+                // タイマー表示
+                const timerLoop = setInterval(() => {
+                    if (stage !== "running") {
+                        clearInterval(timerLoop);
+                        return;
+                    }
+                    document.getElementById("timer").textContent =
+                        ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
+                }, 80);
+            }
+
+            else if (stage === "running" && decodedText === "STOP_QR") {
+                stage = "finished";
+                const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+
+                const statusEl = document.getElementById("status");
+                statusEl.innerHTML =
+                    `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
+
+                // アニメ終了後クラス削除
+                statusEl.querySelector(".result-pop").addEventListener("animationend", e => {
+                    e.target.classList.remove("result-pop");
+                });
+
+                // カメラ停止
+                if (html5QrCode) {
+                    html5QrCode.stop().then(() => html5QrCode.clear());
+                }
+
+                document.getElementById("reader").style.display = "none";
+                document.getElementById("timer").style.display = "none";
+
+                // 入力フォームを表示
+                document.getElementById("formArea").style.display = "block";
+
+                // 送信処理
+                document.getElementById("submitRecord").onclick = () => {
+                    const name = document.getElementById("inputName").value;
+                    const times = document.getElementById("inputTimes").value;
+                    const habit = document.getElementById("inputHabit").value;
+
+                    if (!name) {
+                        alert("名前を入力してください！");
+                        return;
+                    }
+
+                    sendToGoogleForm(name, elapsed, times, habit);
+
+                    statusEl.innerHTML =
+                        `<span style="font-size:1.6em;">送信しました！ご協力ありがとうございました！</span>`;
+                    document.getElementById("formArea").style.display = "none";
+                };
+            }
+        }
+
+        // --- Googleフォーム送信 ---
+        function sendToGoogleForm(name, time, times, habit) {
+            const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/formResponse";
+            const formData = new FormData();
+
+            // Googleフォームの entry番号 に合わせて書き換える！
+            formData.append("entry.1355586289", name);
+            formData.append("entry.1851549436", time);
+            formData.append("entry.1542941412", times);
+            formData.append("entry.889042589", habit);
+
+            fetch(formURL, {
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            });
+        }
+    </script>
 </body>
 </html>

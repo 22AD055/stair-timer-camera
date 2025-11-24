@@ -28,26 +28,75 @@ function startCamera() {
   });
 }
 
+
+
+
+/* 全画面の「スタート！」演出 */
+#startEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    animation: startFade 1s ease-out forwards;
+}
+
+@keyframes startFade {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.2); }
+}
+
+
+
+
+
+
 // --- QR読み取り時の処理 ---
 function onScanSuccess(decodedText) {
   console.log("QR検出:", decodedText);
 
   // START_QRを読み取った場合
   if (stage === "wait_start" && decodedText === "START_QR") {
-    startTime = Date.now();
-    stage = "running";
-    document.getElementById("status").innerHTML = "計測中...<br>2階のQRを読み取ってください";
 
-    const timerDisplay = document.getElementById("timer");
-    const timerInterval = setInterval(() => {
-      if (stage !== "running") {
-        clearInterval(timerInterval);
-        return;
-      }
-      const elapsed = (Date.now() - startTime) / 1000;
-      timerDisplay.textContent = `${elapsed.toFixed(2)} 秒`;
-    }, 100);
-  }
+    stage = "running";
+    startTime = Date.now();
+
+    // --- スタート演出 ---
+    const eff = document.getElementById("startEffect");
+    eff.style.display = "flex";
+
+    // 1秒後に自動で消える
+    setTimeout(() => {
+        eff.style.display = "none";
+    }, 1000);
+
+    // --- タイマー表示を0からスタート ---
+    document.getElementById("timer").style.display = "block";
+    document.getElementById("timer").textContent = "0.00 秒";
+
+    document.getElementById("status").innerHTML =
+        "計測中...<br>2階のQRを読み取ってください";
+
+    // タイマーを動かす
+    const timerLoop = setInterval(() => {
+        if (stage !== "running") {
+            clearInterval(timerLoop);
+            return;
+        }
+        document.getElementById("timer").textContent =
+            ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
+    }, 50);
+}
+
+
+
 
   // STOP_QRを読み取った場合
   else if (stage === "running" && decodedText === "STOP_QR") {

@@ -14,6 +14,8 @@ function startCamera() {
 
     document.getElementById("startButton").style.display = "none";
     
+    document.getElementById("reader").style.display = "block";
+
     const timerEl = document.getElementById("timer");
     timerEl.style.display = "block";
     timerEl.textContent = "0.00 秒";  // ← ここが重要！
@@ -26,7 +28,10 @@ function startCamera() {
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         onScanSuccess
-    );
+    ).catch(err => {
+        alert("カメラを起動できませんでした。設定を確認してください。");
+        console.error(err);
+    });
 }
 
 // --- QR読み取り ---

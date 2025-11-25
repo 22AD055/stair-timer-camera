@@ -85,22 +85,29 @@ function onScanSuccess(decodedText) {
         document.getElementById("formArea").style.display = "block";
 
         document.getElementById("submitRecord").onclick = () => {
-            const name = document.getElementById("inputName").value;
-            const times = document.getElementById("inputTimes").value;
-            const habit = document.getElementById("inputHabit").value;
+    const name = document.getElementById("inputName").value;
+    const times = document.getElementById("inputTimes").value;
+    const habit = document.getElementById("inputHabit").value;
 
-            if (!name) { alert("名前を入力してください"); return; }
+    if (!name) {
+        alert("名前を入力してください");
+        return;
+    }
 
-            sendToGoogleForm(name, elapsed, times, habit);
+    sendToGoogleForm(name, elapsed, times, habit);
 
-            statusEl.innerHTML =
-                `<span style="font-size:1.6em;">送信しました！ありがとうございました！</span>`;
-            document.getElementById("formArea").style.display = "none";
-            // アンケート案内を表示
-            document.getElementById("surveyArea").style.display = "block";
-	    document.getElementById("surveyLink").href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header";
+    statusEl.innerHTML =
+        `<span style="font-size:1.6em;">送信しました！ありがとうございました！</span>`;
+    document.getElementById("formArea").style.display = "none";
 
-        };
+    // ★★★ ここからアンケート案内表示 ★★★
+    const survey = document.getElementById("surveyArea");
+    const link = document.getElementById("surveyLink");
+
+    survey.style.display = "block";
+    link.href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header; // ←フォームURL
+};
+
     }
 }
 

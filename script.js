@@ -51,7 +51,12 @@ function onScanSuccess(decodedText) {
         effect.style.animation = "none";
         void effect.offsetWidth;
         effect.style.animation = "startFade 0.9s forwards";
+
+        setTimeout(() => {
+          effect.style.display = "none";
+        }, 900);
  
+}
 
     // ---- タイマー初期化（iPhoneでこれが必要）----
     const timerEl = document.getElementById("timer");

@@ -31,33 +31,6 @@ function startCamera() {
 
 
 
-/* 全画面の「スタート！」演出 */
-#startEffect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    font-size: 4em;
-    font-weight: bold;
-    background: rgba(255, 255, 255, 0.8);
-    z-index: 9999;
-    animation: startFade 1s ease-out forwards;
-}
-
-@keyframes startFade {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(1.2); }
-}
-
-
-
-
-
-
 // --- QR読み取り時の処理 ---
 // --- QRコードを検出したとき ---
 function onScanSuccess(decodedText) {

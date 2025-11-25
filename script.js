@@ -73,7 +73,7 @@ function onScanSuccess(decodedText) {
             document.getElementById("timer").textContent =
                 ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
         }, 80);
-    }
+//あ
 
     /* -------- STOP -------- */
     else if (stage === "running" && decodedText === "STOP_QR") {

@@ -31,11 +31,15 @@ button:hover {
     aspect-ratio: 1 / 1;
     margin: 20px auto;
     display: none;
-    border-radius: 12px; /* ← おしゃれにするなら */
+    border-radius: 12px;
     overflow: hidden;
 }
 
-
+#reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
 
 
 

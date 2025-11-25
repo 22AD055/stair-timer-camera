@@ -2,7 +2,7 @@ let stage = "wait_start";
 let startTime;
 let html5QrCode;
 
-// --- ページロード時イベント ---
+// --- ページロード時 ---
 window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("startButton").addEventListener("click", startCamera);
 });
@@ -12,31 +12,33 @@ function startCamera() {
 
     alert("OKを押すとカメラを起動します");
 
-    document.getElementById("startButton").style.display = "none";
-    
-    document.getElementById("reader").style.display = "block";
-
-    const timerEl = document.getElementById("timer");
-    timerEl.style.display = "block";
-    timerEl.textContent = "0.00 秒";  // ← ここが重要！
-
-    document.getElementById("status").innerHTML =
-        "カメラで<br>7階のQRコードを読み取ってください";
-
+    // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");
+
     html5QrCode.start(
         { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
+        { fps: 10, qrbox: { width: 240, height: 240 } },
         onScanSuccess
-    ).catch(err => {
-        alert("カメラを起動できませんでした。設定を確認してください。");
+    ).then(() => {
+        // 2. 成功したら UI を出す（iPhoneはこの順番が必要）
+        document.getElementById("startButton").style.display = "none";
+        document.getElementById("reader").style.display = "block";
+
+        const timerEl = document.getElementById("timer");
+        timerEl.style.display = "block";
+        timerEl.textContent = "0.00 秒";
+
+        document.getElementById("status").innerHTML =
+            "カメラで<br>7階のQRコードを読み取ってください";
+    }).catch(err => {
+        alert("カメラを起動できませんでした。権限設定を確認してください。");
         console.error(err);
     });
 }
 
+
 // --- QR読み取り ---
 function onScanSuccess(decodedText) {
-
     console.log("QR:", decodedText);
 
     /* -------- START -------- */
@@ -45,35 +47,26 @@ function onScanSuccess(decodedText) {
         stage = "running";
         startTime = Date.now();
 
-        // ★スタート演出
         const effect = document.getElementById("startEffect");
         effect.style.display = "flex";
         effect.style.animation = "none";
         void effect.offsetWidth;
         effect.style.animation = "startFade 0.9s forwards";
 
-        setTimeout(() => {
-          effect.style.display = "none";
-        }, 900);
- 
-}
+        setTimeout(() => { effect.style.display = "none"; }, 900);
 
-    // ---- タイマー初期化（iPhoneでこれが必要）----
-    const timerEl = document.getElementById("timer");
-    timerEl.style.display = "block";
-    timerEl.textContent = "0.00 秒";
+        document.getElementById("status").innerHTML =
+            "計測中...<br>2階のQRを読み取ってください";
 
-    // ---- 表示メッセージ ----
-    document.getElementById("status").innerHTML =
-        "計測中...<br>2階のQRを読み取ってください";
-
+        const timerEl = document.getElementById("timer");
+        timerEl.textContent = "0.00 秒";
 
         const timerLoop = setInterval(() => {
             if (stage !== "running") { clearInterval(timerLoop); return; }
-            document.getElementById("timer").textContent =
+            timerEl.textContent =
                 ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
         }, 80);
-//あ
+    }
 
     /* -------- STOP -------- */
     else if (stage === "running" && decodedText === "STOP_QR") {
@@ -85,16 +78,12 @@ function onScanSuccess(decodedText) {
         statusEl.innerHTML =
             `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
 
-        // カメラ停止
         html5QrCode.stop().then(() => html5QrCode.clear());
 
         document.getElementById("reader").style.display = "none";
         document.getElementById("timer").style.display = "none";
-
-        // フォーム表示
         document.getElementById("formArea").style.display = "block";
 
-        // 送信イベント
         document.getElementById("submitRecord").onclick = () => {
             const name = document.getElementById("inputName").value;
             const times = document.getElementById("inputTimes").value;
@@ -111,7 +100,6 @@ function onScanSuccess(decodedText) {
     }
 }
 
-// --- Googleフォーム送信 ---
 function sendToGoogleForm(name, time, times, habit) {
 
     const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/formResponse";

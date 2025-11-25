@@ -71,6 +71,7 @@ function onScanSuccess(decodedText) {
     // --- スタート演出 ---
     const eff = document.getElementById("startEffect");
     eff.style.display = "flex";
+    eff.style.animation = "startFade 1s ease-out forwards";
 
     // 1秒後に自動で消える
     setTimeout(() => {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>階段タイムチャレンジ</title>
+    <title>階段チャレンジ</title>
 
     <!-- QR読み取りライブラリ -->
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -51,6 +51,17 @@
 
         <button id="submitRecord">記録を送信</button>
     </div>
+
+    <div id="surveyArea" style="display:none; margin-top:25px;">
+        <p style="font-size:1.3em; font-weight:bold;">
+            1分で終わるアンケートにご協力ください！
+        </p>
+        <a id="surveyLink" href="#" target="_blank"
+           style="font-size:1.3em; color:#0078ff; text-decoration:underline;">
+           アンケートに進む
+        </a>
+</div>
+
 
     <!-- JS読み込み -->
     <script src="script.js"></script>

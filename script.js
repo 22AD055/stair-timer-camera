@@ -96,6 +96,10 @@ function onScanSuccess(decodedText) {
             statusEl.innerHTML =
                 `<span style="font-size:1.6em;">送信しました！ありがとうございました！</span>`;
             document.getElementById("formArea").style.display = "none";
+            // アンケート案内を表示
+            document.getElementById("surveyArea").style.display = "block";
+	    document.getElementById("surveyLink").href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header";
+
         };
     }
 }

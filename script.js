@@ -96,7 +96,7 @@ function onScanSuccess(decodedText) {
 // --- Googleフォーム送信 ---
 function sendToGoogleForm(name, time, times, habit) {
 
-    const formURL = "★あなたの formResponse URL に書き換えてください★";
+    const formURL = "https://docs.google.com/forms/u/0/d/1AIB5dqPyadzNFs5uNWDdKZSxPqYBZFqcvDBDzKzZyks/formResponse";
 
     const fd = new FormData();
     fd.append("entry.1355586289", name);

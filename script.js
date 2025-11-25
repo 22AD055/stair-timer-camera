@@ -105,7 +105,7 @@ function onScanSuccess(decodedText) {
     const link = document.getElementById("surveyLink");
 
     survey.style.display = "block";
-    link.href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header; // ←フォームURL
+    link.href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header";
 };
 
     }

@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動 ---
 function startCamera() {
 
-    alert("OKを押すとカメラを起動します");
+    alert("カメラを起動します！");
 
     // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");
@@ -29,7 +29,7 @@ function startCamera() {
         timerEl.textContent = "0.00 秒";
 
         document.getElementById("status").innerHTML =
-            "カメラで<br>7階のQRコードを読み取ってください";
+            "カメラで<br>7階のQRコードを<br>読み取ってください";
     }).catch(err => {
         alert("カメラを起動できませんでした。権限設定を確認してください。");
         console.error(err);
@@ -51,12 +51,12 @@ function onScanSuccess(decodedText) {
         effect.style.display = "flex";
         effect.style.animation = "none";
         void effect.offsetWidth;
-        effect.style.animation = "startFade 0.9s forwards";
+        effect.style.animation = "startFade 3.0s forwards";
 
-        setTimeout(() => { effect.style.display = "none"; }, 900);
+        setTimeout(() => { effect.style.display = "none"; }, 3000);
 
         document.getElementById("status").innerHTML =
-            "計測中...<br>2階のQRを読み取ってください";
+            "階段を降りて、2階の停止コードを<br>読み込んでください！";
 
         const timerEl = document.getElementById("timer");
         timerEl.textContent = "0.00 秒";
@@ -76,7 +76,7 @@ function onScanSuccess(decodedText) {
 
         const statusEl = document.getElementById("status");
         statusEl.innerHTML =
-            `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
+            `<span class="result-pop" style="font-size:1.8em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
 
         html5QrCode.stop().then(() => html5QrCode.clear());
 
@@ -97,7 +97,7 @@ function onScanSuccess(decodedText) {
     sendToGoogleForm(name, elapsed, times, habit);
 
     statusEl.innerHTML =
-        `<span style="font-size:1.6em;">送信しました！ありがとうございました！</span>`;
+        `<span style="font-size:1.6em;">記録を送信しました！<br>お疲れ様でした！</span>`;
     document.getElementById("formArea").style.display = "none";
 
     // ★★★ ここからアンケート案内表示 ★★★

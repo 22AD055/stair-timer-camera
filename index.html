@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>階段チャレンジ</title>
+    <title>階段チャレンジ！</title>
 
     <!-- QR読み取りライブラリ -->
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -19,7 +19,7 @@
 
     <h1>階段チャレンジ</h1>
 
-    <p id="status">下のボタンを押してカメラを起動してください</p>
+    <p id="status">下のボタンから<br>カメラを起動してください</p>
 
     <button id="startButton">カメラを起動</button>
 
@@ -28,9 +28,9 @@
 
     <!-- 記録フォーム -->
     <div id="formArea">
-        <h2>記録を登録</h2>
+        <h2>以下の項目を入力して<br>記録を登録してください</h2>
 
-        <label>名前：</label><br>
+        <label>名前（ランキング表示用）</label><br>
         <input id="inputName" type="text"><br>
 
         <label>階段チャレンジは何回目ですか？</label><br>
@@ -41,7 +41,7 @@
             <option value="それ以上">それ以上</option>
         </select><br>
 
-        <label>普段の階段利用頻度：</label><br>
+        <label>普段、階段を利用しますか？</label><br>
         <select id="inputHabit">
             <option value="全く利用しない">全く利用しない</option>
             <option value="あまり利用しない">あまり利用しない</option>
@@ -54,7 +54,7 @@
 
     <div id="surveyArea" style="display:none; margin-top:25px;">
         <p style="font-size:1.3em; font-weight:bold;">
-            1分で終わるアンケートにご協力ください！
+            1分で終わるアンケートに<br>ご協力ください！
         </p>
         <a id="surveyLink" href="#" target="_blank"
            style="font-size:1.3em; color:#0078ff; text-decoration:underline;">

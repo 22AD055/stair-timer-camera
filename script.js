@@ -13,7 +13,11 @@ function startCamera() {
     alert("OKを押すとカメラを起動します");
 
     document.getElementById("startButton").style.display = "none";
-    document.getElementById("reader").style.display = "block";
+    
+    const timerEl = document.getElementById("timer");
+    timerEl.style.display = "block";
+    timerEl.textContent = "0.00 秒";  // ← ここが重要！
+
     document.getElementById("status").innerHTML =
         "カメラで<br>7階のQRコードを読み取ってください";
 
@@ -39,16 +43,20 @@ function onScanSuccess(decodedText) {
         // ★スタート演出
         const effect = document.getElementById("startEffect");
         effect.style.display = "flex";
+        effect.style.animation = "none";
+        void effect.offsetWidth;
         effect.style.animation = "startFade 0.9s forwards";
+ 
 
-        setTimeout(() => {
-            effect.style.display = "none";
-        }, 900);
+    // ---- タイマー初期化（iPhoneでこれが必要）----
+    const timerEl = document.getElementById("timer");
+    timerEl.style.display = "block";
+    timerEl.textContent = "0.00 秒";
 
-        // タイマー表示
-        document.getElementById("timer").style.display = "block";
-        document.getElementById("status").innerHTML =
-            "計測中...<br>2階のQRを読み取ってください";
+    // ---- 表示メッセージ ----
+    document.getElementById("status").innerHTML =
+        "計測中...<br>2階のQRを読み取ってください";
+
 
         const timerLoop = setInterval(() => {
             if (stage !== "running") { clearInterval(timerLoop); return; }

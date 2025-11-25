@@ -59,92 +59,88 @@ function startCamera() {
 
 
 // --- QR読み取り時の処理 ---
+// --- QRコードを検出したとき ---
 function onScanSuccess(decodedText) {
-  console.log("QR検出:", decodedText);
 
-  // START_QRを読み取った場合
-  if (stage === "wait_start" && decodedText === "START_QR") {
+    console.log("QR検出:", decodedText);
 
-    stage = "running";
-    startTime = Date.now();
+    // --- START ---
+    if (stage === "wait_start" && decodedText === "START_QR") {
+        stage = "running";
+        startTime = Date.now();
 
-    // --- スタート演出 ---
-    const eff = document.getElementById("startEffect");
-    eff.style.display = "flex";
-    eff.style.animation = "startFade 1s ease-out forwards";
+        // ★スタート演出表示
+        const effect = document.getElementById("startEffect");
+        effect.style.display = "flex";
+        effect.style.animation = "startFade 0.8s forwards";
 
-    // 1秒後に自動で消える
-    setTimeout(() => {
-        eff.style.display = "none";
-    }, 1000);
+        // 0.8秒後に非表示
+        setTimeout(() => {
+            effect.style.display = "none";
+        }, 800);
 
-    // --- タイマー表示を0からスタート ---
-    document.getElementById("timer").style.display = "block";
-    document.getElementById("timer").textContent = "0.00 秒";
+        // タイマー表示開始
+        document.getElementById("timer").style.display = "block";
 
-    document.getElementById("status").innerHTML =
-        "計測中...<br>2階のQRを読み取ってください";
+        document.getElementById("status").innerHTML =
+            "計測中...<br>2階のQRを読み取ってください";
 
-    // タイマーを動かす
-    const timerLoop = setInterval(() => {
-        if (stage !== "running") {
-            clearInterval(timerLoop);
-            return;
-        }
-        document.getElementById("timer").textContent =
-            ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
-    }, 50);
-}
-
-
-
-
-  // STOP_QRを読み取った場合
-  else if (stage === "running" && decodedText === "STOP_QR") {
-  stage = "finished";
-  const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
-
-  // 結果を表示（アニメーション付き）
-  const statusEl = document.getElementById("status");
-  statusEl.innerHTML = `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
-
-  const resultEl = statusEl.querySelector(".result-pop");
-  resultEl.addEventListener("animationend", () => {
-    resultEl.classList.remove("result-pop");
-  });
-
-  document.getElementById("timer").textContent = `${elapsed} 秒`;
-
-  // --- カメラ停止 ---
-  if (html5QrCode) {
-    html5QrCode.stop().then(() => {
-      html5QrCode.clear();
-    });
-  }
-  document.getElementById("reader").style.display = "none";
-  document.getElementById("timer").style.display = "none";
-
-  // --- 入力フォームを表示 ---
-  document.getElementById("formArea").style.display = "block";
-
-  // --- 送信ボタンの処理 ---
-  document.getElementById("submitRecord").onclick = () => {
-    const name = document.getElementById("inputName").value;
-    const times = document.getElementById("inputTimes").value;
-    const habit = document.getElementById("inputHabit").value;
-
-    if (!name) {
-      alert("名前を入力してください！");
-      return;
+        const timerLoop = setInterval(() => {
+            if (stage !== "running") {
+                clearInterval(timerLoop);
+                return;
+            }
+            document.getElementById("timer").textContent =
+                ((Date.now() - startTime) / 1000).toFixed(2) + " 秒";
+        }, 80);
     }
 
-    // フォームへ送信
-    sendToGoogleForm(name, elapsed, times, habit);
+    // --- STOP ---
+    else if (stage === "running" && decodedText === "STOP_QR") {
+        stage = "finished";
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
 
-    statusEl.innerHTML = `<span style="font-size:1.6em;">送信しました！ご協力ありがとうございました！</span>`;
-    document.getElementById("formArea").style.display = "none";
-  };
+        const statusEl = document.getElementById("status");
+        statusEl.innerHTML =
+            `<span class="result-pop" style="font-size:2.5em; font-weight:bold;">結果：${elapsed} 秒！</span>`;
+
+        // アニメ終了後クラス削除
+        statusEl.querySelector(".result-pop")
+            .addEventListener("animationend", e => {
+                e.target.classList.remove("result-pop");
+            });
+
+        // カメラ停止
+        if (html5QrCode) {
+            html5QrCode.stop().then(() => html5QrCode.clear());
+        }
+
+        document.getElementById("reader").style.display = "none";
+        document.getElementById("timer").style.display = "none";
+
+        // 入力フォーム表示
+        document.getElementById("formArea").style.display = "block";
+
+        // 送信ボタン処理
+        document.getElementById("submitRecord").onclick = () => {
+            const name = document.getElementById("inputName").value;
+            const times = document.getElementById("inputTimes").value;
+            const habit = document.getElementById("inputHabit").value;
+
+            if (!name) {
+                alert("名前を入力してください！");
+                return;
+            }
+
+            sendToGoogleForm(name, elapsed, times, habit);
+
+            statusEl.innerHTML =
+                `<span style="font-size:1.6em;">送信しました！ご協力ありがとうございました！</span>`;
+            document.getElementById("formArea").style.display = "none";
+        };
+    }
 }
+
 
 
 // --- Googleフォームに送信 ---

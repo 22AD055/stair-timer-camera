@@ -98,7 +98,7 @@ function onScanSuccess(decodedText) {
 
     statusEl.innerHTML =
     `<div class="finish-message">
-        記録を送信しました<br>お疲れ様でした！
+        記録を送信しました。<br>お疲れ様でした！
      </div>`;
 
     document.getElementById("formArea").style.display = "none";

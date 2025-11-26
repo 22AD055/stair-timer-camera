@@ -118,7 +118,7 @@ button:hover {
 }
 
 
-#rankingArea .survey-button {
+#surveyArea .survey-button {
     display: inline-block;
     padding: 12px 20px;
     background-color: #0078ff;
@@ -127,7 +127,7 @@ button:hover {
     border-radius: 10px;
     font-size: 1.2em;
 }
-#rankingArea .survey-button:hover {
+#surveyArea .survey-button:hover {
     background-color: #005fcc;
 }
 

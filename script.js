@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動 ---
 function startCamera() {
 
-    alert("カメラを起動します！");
+    alert("テスト1カメラを起動します！");
 
     // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");

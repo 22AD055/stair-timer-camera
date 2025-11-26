@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動 ---
 function startCamera() {
 
-    alert("テスト5カメラを起動します！");
+    alert("テスト6カメラを起動します！");
 
     // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");
@@ -98,7 +98,7 @@ function onScanSuccess(decodedText) {
 
     statusEl.innerHTML =
     `<div class="finish-message">
-        テスト5<br>記録を送信しました。<br>お疲れ様でした！
+        テスト6<br>記録を送信しました。<br>お疲れ様でした！
      </div>`;
 
     document.getElementById("formArea").style.display = "none";

@@ -52,23 +52,24 @@
         <button id="submitRecord">記録を送信</button>
     </div>
 
-    <div id="surveyArea" style="display:none; margin-top:25px;">
-        <p style="font-size:1.3em; font-weight:bold;">
-            1分で終わるアンケートに<br>ご協力ください！
-        </p>
-        <a id="surveyLink" href="#" target="_blank"
-           style="font-size:1.3em; color:#0078ff; text-decoration:underline;">
-           アンケートに進む
+	<div id="surveyArea" style="display:none; margin-top:25px;">
+ 	   <p style="font-size:1.3em; font-weight:bold;">
+	        1分で終わるアンケートに<br>ご協力ください！
+  	  </p>
+
+	    <!-- ★アンケートをボタン化 -->
+ 	   <a id="surveyLink" href="#" target="_blank" class="survey-button">
+  	      アンケートに進む
+ 	   </a>
+
+ 	   <!-- ★ランキングを青文字リンク化 -->
+ 	   <div id="rankingArea" style="display:none; margin-top: 30px;">
+  	      <a id="rankingLink" href="#" target="_blank" class="ranking-link">
+   	         現在のランキングはこちら
         </a>
-
-	<div id="rankingArea" style="display:none; margin-top: 30px;">
-	    <a id="rankingLink" href="#" target="_blank" class="survey-button">
-	        現在のランキングはこちら
-    </a>
+    </div>
 </div>
 
-
-</div>
 
 
     <!-- JS読み込み -->

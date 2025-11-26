@@ -97,7 +97,10 @@ function onScanSuccess(decodedText) {
     sendToGoogleForm(name, elapsed, times, habit);
 
     statusEl.innerHTML =
-        `<span style="font-size:1.6em;">記録を送信しました！<br>お疲れ様でした！</span>`;
+    `<div class="finish-message">
+        記録を送信しました！<br>お疲れ様でした！
+     </div>`;
+
     document.getElementById("formArea").style.display = "none";
 
     // ★★★ ここからアンケート案内表示 ★★★

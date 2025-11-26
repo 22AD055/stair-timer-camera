@@ -109,3 +109,10 @@ button:hover {
   font-size: 1.2em;
   margin-top: 18px;
 }
+
+.finish-message {
+    font-size: 1.6em;
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1.4em;
+}

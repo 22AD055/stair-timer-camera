@@ -131,13 +131,3 @@ button:hover {
     background-color: #005fcc;
 }
 
-/* 青文字の下線リンク（ランキング用） */
-.ranking-link {
-    font-size: 1.3em;
-    color: #0078ff;
-    text-decoration: underline;
-}
-
-/* 既存のアンケートボタンのスタイルが survey-button */
-
-

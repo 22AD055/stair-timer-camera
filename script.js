@@ -29,7 +29,7 @@ function startCamera() {
         timerEl.textContent = "0.00 秒";
 
         document.getElementById("status").innerHTML =
-            "カメラで<br>7階のQRコードを<br>読み取ってください";
+            "7階のQRコードを<br>読み取ってください";
     }).catch(err => {
         alert("カメラを起動できませんでした。権限設定を確認してください。");
         console.error(err);
@@ -56,7 +56,7 @@ function onScanSuccess(decodedText) {
         setTimeout(() => { effect.style.display = "none"; }, 3000);
 
         document.getElementById("status").innerHTML =
-            "階段を降りて、2階の停止コードを<br>読み込んでください！";
+            "階段を降りて、<br>2階の停止コードを<br>読み込んでください！";
 
         const timerEl = document.getElementById("timer");
         timerEl.textContent = "0.00 秒";
@@ -90,7 +90,7 @@ function onScanSuccess(decodedText) {
     const habit = document.getElementById("inputHabit").value;
 
     if (!name) {
-        alert("名前を入力してください");
+        alert("名前を入力してください！");
         return;
     }
 

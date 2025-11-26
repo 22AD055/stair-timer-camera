@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動 ---
 function startCamera() {
 
-    alert("テスト2カメラを起動します！");
+    alert("テスト3カメラを起動します！");
 
     // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");
@@ -98,22 +98,22 @@ function onScanSuccess(decodedText) {
 
     statusEl.innerHTML =
     `<div class="finish-message">
-        テスト2<br>記録を送信しました。<br>お疲れ様でした！
+        テスト3<br>記録を送信しました。<br>お疲れ様でした！
      </div>`;
 
     document.getElementById("formArea").style.display = "none";
 
     // ★★★ ここからアンケート案内表示 ★★★
-    const survey = document.getElementById("surveyArea");
-    const link = document.getElementById("surveyLink");
+    const survey = document.getElementById("rankingArea");
+    const link = document.getElementById("rankingLink");
 
     survey.style.display = "block";
     link.href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header";
 
 
 // ★ ランキング案内も表示
-const ranking = document.getElementById("rankingArea");
-const rankingLink = document.getElementById("rankingLink");
+const ranking = document.getElementById("surveyArea");
+const rankingLink = document.getElementById("surveyLink");
 
 ranking.style.display = "block";  // ← 表示する
 rankingLink.href = "https://script.google.com/macros/s/AKfycbzUXlE-h4pSZhrBvYxLWdLVwrRrAzL6GDLmwTgi4WN0I0VrapPpBvEhTeoQJyYZCHC7xQ/exec";

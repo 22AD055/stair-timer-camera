@@ -116,3 +116,18 @@ button:hover {
     white-space: nowrap;
     line-height: 1.4em;
 }
+
+
+#rankingArea .survey-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #0078ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+#rankingArea .survey-button:hover {
+    background-color: #005fcc;
+}
+

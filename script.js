@@ -109,6 +109,18 @@ function onScanSuccess(decodedText) {
 
     survey.style.display = "block";
     link.href = "https://docs.google.com/forms/d/e/1FAIpQLSfo3chqeLfie63jbyLHMCJ5aqdk-jrstxEsAMmUoUqKNfkO_A/viewform?usp=header";
+
+
+// ★ ランキング案内も表示
+const ranking = document.getElementById("rankingArea");
+const rankingLink = document.getElementById("rankingLink");
+
+ranking.style.display = "block";  // ← 表示する
+rankingLink.href = "https://script.google.com/macros/s/AKfycbzUXlE-h4pSZhrBvYxLWdLVwrRrAzL6GDLmwTgi4WN0I0VrapPpBvEhTeoQJyYZCHC7xQ/exec";
+
+
+
+
 };
 
     }

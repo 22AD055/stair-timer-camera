@@ -116,7 +116,7 @@ const ranking = document.getElementById("surveyArea");
 const rankingLink = document.getElementById("surveyLink");
 
 ranking.style.display = "block";  // ← 表示する
-rankingLink.href = "https://script.google.com/macros/s/AKfycbzUXlE-h4pSZhrBvYxLWdLVwrRrAzL6GDLmwTgi4WN0I0VrapPpBvEhTeoQJyYZCHC7xQ/exec";
+rankingLink.href = "https://script.google.com/macros/s/AKfycbwchBUM79A5IfI18hOavAKPJScQrkXUVuv5WWe0OCHsLR8fbQfr1dtDTSEHVNEhYRxrDw/exec";
 
 
 

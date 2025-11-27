@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // --- カメラ起動 ---
 function startCamera() {
 
-    alert("カメラを起動します！");
+    alert("テスト1カメラを起動します！");
 
     // 1. ボタン押した直後に起動（← iPhone で必須）
     html5QrCode = new Html5Qrcode("reader");
@@ -42,7 +42,7 @@ function onScanSuccess(decodedText) {
     console.log("QR:", decodedText);
 
     /* -------- START -------- */
-    if (stage === "wait_start" && decodedText === "7Fで階段チャレンジ実施中！") {
+    if (stage === "wait_start" && decodedText === "まずはポスターを読んでください！") {
 
         stage = "running";
         startTime = Date.now();
@@ -69,7 +69,7 @@ function onScanSuccess(decodedText) {
     }
 
     /* -------- STOP -------- */
-    else if (stage === "running" && decodedText === "まずはポスターを読んでください！") {
+    else if (stage === "running" && decodedText === "７階で階段チャレンジ実施中！") {
 
         stage = "finished";
         const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);

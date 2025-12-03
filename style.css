@@ -6,12 +6,12 @@ body {
 }
 
 h1 {
-  color: #0078ff;
+  color: #00a896;
   margin-bottom: 20px;
 }
 
 button {
-  background-color: #0078ff;
+  background-color: #00a896;
   color: white;
   border: none;
   padding: 12px 22px;
@@ -22,7 +22,7 @@ button {
 }
 
 button:hover {
-  background-color: #005fcc;
+  background-color: #127d72;
 }
 
 #reader {
@@ -81,7 +81,7 @@ button:hover {
   font-weight: bold;
   background: rgba(255, 255, 255, 0.85);
   z-index: 9999;
-  color: #0078ff;
+  color: #00a896;
 }
 
 @keyframes startFade {
@@ -121,13 +121,13 @@ button:hover {
 #rankingArea .survey-button {
     display: inline-block;
     padding: 12px 20px;
-    background-color: #0078ff;
+    background-color: #00a896;
     color: white;
     text-decoration: none;
     border-radius: 10px;
     font-size: 1.2em;
 }
 #rankingArea .survey-button:hover {
-    background-color: #005fcc;
+    background-color: #127d72;
 }
 

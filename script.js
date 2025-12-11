@@ -29,7 +29,7 @@ function startCamera() {
         timerEl.textContent = "0.00 秒";
 
         document.getElementById("status").innerHTML =
-            "7階のQRコードを<br>読み取ってください";
+            "7階の開始コードを<br>読み取ってください";
     }).catch(err => {
         alert("カメラを起動できませんでした。権限設定を確認してください。");
         console.error(err);
